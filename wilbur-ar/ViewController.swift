@@ -41,56 +41,55 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     let updateQueue = DispatchQueue(label: "com.example.wilbur-ar")
     
+    /// - Tag: ARObjectAnchor-Visualizing
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        guard let objectAnchor = anchor as? ARObjectAnchor else {
-            return
-        }
-        
+        guard let objectAnchor = anchor as? ARObjectAnchor else { return }
+
         let referenceObject = objectAnchor.referenceObject
-        
+
         // The following timer fires after 2 seconds, but every time when there found an anchor the timer is stopped.
-        // So when there is no ARObjectAnchor found the timer will be completed and the current scene node will be deleted and the variable will set to nil
+        // So when there is no ARImageAnchor found the timer will be completed and the current scene node will be deleted
+        // and the variable will set to nil
         updateQueue.async {
             if(self.timer != nil){
+                print("Found object")
                 self.timer.invalidate()
             }
-            
-            self.timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
-                self.currentNode?.removeFromParentNode()
+            self.timer = Timer.scheduledTimer(timeInterval: 2.0 , target: self, selector: #selector(self.imageLost(_:)), userInfo: nil, repeats: false)
+        }
+
+        // Check if there is found a new object on the basis of the ARObjectAnchorIdentifier,
+        // when found delete the current scene node and set the variable to nil
+        if(self.currentARObjectAnchorIdentifier != objectAnchor.identifier &&
+            self.currentARObjectAnchorIdentifier != nil
+            && self.currentNode != nil){
+                // found new image
+                self.currentNode!.removeFromParentNode()
                 self.currentNode = nil
-            }
         }
-
-         // Check if there is found a new image on the basis of the ARImageAnchorIdentifier, when found delete the current scene node and set the variable to nil
-        if(currentARObjectAnchorIdentifier != objectAnchor.identifier &&
-            currentARObjectAnchorIdentifier != nil
-            && currentNode != nil){
-
-            print("INSIDE CHECK FOR NEW OBJECT AND GONNA DELETE THE SCENE")
-                //found new object
-                currentNode!.removeFromParentNode()
-                currentNode = nil
-        }
-
 
         updateQueue.async {
-            // If currentNode is nil, there is currently no scene node
-            if(self.currentNode == nil){
+            //If currentNode is nil, there is currently no scene node
+            if (self.currentNode == nil) {
                 switch referenceObject.name {
                     case "daruma2":
                         self.handleFoundObject(objectAnchor: objectAnchor, node: node)
                         self.currentNode = self.scnNodeDaruma
                     default: break
                 }
+
             }
 
             self.currentARObjectAnchorIdentifier = objectAnchor.identifier
 
+            print("currentNode", self.currentNode)
+            print("rootNode", self.sceneView.scene.rootNode.childNodes)
+            
             // Delete anchor from the session to reactivate the image recognition
             self.sceneView.session.remove(anchor: anchor)
         }
+
     }
-    
     
     // The scnNodeDaruma variable will be the node to be added when the daruma object is found.
     private var scnNodeDaruma: SCNNode = SCNNode()
@@ -138,4 +137,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     let cubeNode = SCNNode(geometry: SCNBox(width: 0.02, height: 0.02, length: 0.02, chamferRadius: 0))
+    
+    @objc
+    func imageLost(_ sender:Timer){
+        self.currentNode!.removeFromParentNode()
+        self.currentNode = nil
+    }
 }
