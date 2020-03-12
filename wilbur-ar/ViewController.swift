@@ -68,11 +68,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 self.currentNode = nil
         }
 
-        updateQueue.async {
+//        updateQueue.async {
             //If currentNode is nil, there is currently no scene node
             if (self.currentNode == nil) {
                 switch referenceObject.name {
-                    case "daruma2":
+                    case "daruma_3":
                         self.handleFoundObject(objectAnchor: objectAnchor, node: node)
                         self.currentNode = self.scnNodeDaruma
                     default: break
@@ -89,7 +89,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             self.sceneView.session.remove(anchor: anchor)
         }
 
-    }
+//    }
     
     // The scnNodeDaruma variable will be the node to be added when the daruma object is found.
     private var scnNodeDaruma: SCNNode = SCNNode()
