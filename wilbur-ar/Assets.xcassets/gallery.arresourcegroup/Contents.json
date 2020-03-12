@@ -5,6 +5,9 @@
   },
   "resources" : [
     {
+      "filename" : "big-daruma.arobject"
+    },
+    {
       "filename" : "daruma_3.arobject"
     },
     {
