@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		90180781241C2883008B057C /* small-waffle.dae in Resources */ = {isa = PBXBuildFile; fileRef = 90180780241C2883008B057C /* small-waffle.dae */; };
 		906F797F238A8E0400FE10D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906F797E238A8E0400FE10D4 /* AppDelegate.swift */; };
 		906F7981238A8E0400FE10D4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906F7980238A8E0400FE10D4 /* ViewController.swift */; };
 		906F7983238A8E0400FE10D4 /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 906F7982238A8E0400FE10D4 /* Experience.rcproject */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		90180780241C2883008B057C /* small-waffle.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = "small-waffle.dae"; sourceTree = "<group>"; };
 		906F797B238A8E0400FE10D4 /* wilbur-ar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "wilbur-ar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		906F797E238A8E0400FE10D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		906F7980238A8E0400FE10D4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				906F7980238A8E0400FE10D4 /* ViewController.swift */,
 				906F7982238A8E0400FE10D4 /* Experience.rcproject */,
 				906F7984238A8E0400FE10D4 /* Main.storyboard */,
+				90180780241C2883008B057C /* small-waffle.dae */,
 				906F7987238A8E0600FE10D4 /* Assets.xcassets */,
 				906F7989238A8E0600FE10D4 /* LaunchScreen.storyboard */,
 				906F798C238A8E0600FE10D4 /* Info.plist */,
@@ -128,6 +131,7 @@
 				906F798B238A8E0600FE10D4 /* LaunchScreen.storyboard in Resources */,
 				906F7988238A8E0600FE10D4 /* Assets.xcassets in Resources */,
 				906F7986238A8E0400FE10D4 /* Main.storyboard in Resources */,
+				90180781241C2883008B057C /* small-waffle.dae in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
