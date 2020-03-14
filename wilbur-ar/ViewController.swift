@@ -16,30 +16,37 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet var sceneView: ARSCNView!
     
     private var worldConfiguration: ARWorldTrackingConfiguration?
-
+    
+    var waffleModel: SCNNode!
+    
     override func viewDidLoad() {
-      super.viewDidLoad()
+        super.viewDidLoad()
         
-      sceneView.autoenablesDefaultLighting = true
+        sceneView.autoenablesDefaultLighting = true
+        sceneView.antialiasingMode = .multisampling4X
         
-      sceneView.delegate = self
+        sceneView.delegate = self
         
-      // Uncomment to show statistics such as fps and timing information
-      //sceneView.showsStatistics = true
+        // Uncomment to show statistics such as fps and timing information
+        //sceneView.showsStatistics = true
         
-      let scene = SCNScene()
+        let scene = SCNScene()
         
-      sceneView.scene = scene
-
-      setupObjectDetection()
+        sceneView.scene = scene
+        
+        let waffleScene = SCNScene(named: "small-waffle.dae")!
+        
+        waffleModel =  waffleScene.rootNode.childNode(withName: "waffle", recursively: true)
+        
+        setupObjectDetection()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if let configuration = worldConfiguration {
-          sceneView.debugOptions = .showFeaturePoints
-          sceneView.session.run(configuration)
+            sceneView.debugOptions = .showFeaturePoints
+            sceneView.session.run(configuration)
         }
     }
     
@@ -51,53 +58,41 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     private func setupObjectDetection() {
         worldConfiguration = ARWorldTrackingConfiguration()
-
+        
         guard let referenceObjects = ARReferenceObject.referenceObjects(
-          inGroupNamed: "gallery", bundle: nil) else {
-          fatalError("Missing expected asset catalog resources.")
+            inGroupNamed: "gallery", bundle: nil) else {
+                fatalError("Missing expected asset catalog resources.")
         }
-
+        
         worldConfiguration?.detectionObjects = referenceObjects
     }
     
     
-    /// - Tag: ARObjectAnchor-Visualizing
+    /*
+     Called when a SceneKit node corresponding to a
+     new AR anchor has been added to the scene.
+     */
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-      if let objectAnchor = anchor as? ARObjectAnchor {
-        handleFoundObject(objectAnchor, node)
-      }
+        if let objectAnchor = anchor as? ARObjectAnchor {
+            handleFoundObject(objectAnchor, node)
+        }
     }
-
+    
     private func handleFoundObject(_ objectAnchor: ARObjectAnchor, _ node: SCNNode) {
-      // 1
-      let name = objectAnchor.referenceObject.name!
-      print("You found a \(name) object")
+        // 1
+        let name = objectAnchor.referenceObject.name!
+        print("You found a \(name) object")
+        
+        // 2 Adds Waffle async on main thread
+        DispatchQueue.main.async {
+            let modelClone = self.waffleModel.clone()
+            // Correct model orientation
+            modelClone.eulerAngles.x = 80
+                
+            modelClone.position = SCNVector3(0, 0.075, -0.02)
 
-      // 2 Adds Text
-      let text = SCNText(string: name, extrusionDepth: 0.1)
-      let material = SCNMaterial()
-      material.diffuse.contents = UIColor.red
-      text.materials = [material]
-      text.font = UIFont(name: "Helvetica", size: 1)
-      
-      let textNode = SCNNode()
-      textNode.scale = SCNVector3(x: 0.02, y: 0.01, z: 0.01)
-      textNode.geometry = text
-      textNode.position = node.position
-      textNode.position.y += 0.05
-      textNode.position.x -= 0.018
-      node.addChildNode(textNode)
-        
-      // 3 Adds waffle
-      let waffleScene = SCNScene(named: "small-waffle.dae")
-  
-      guard let waffleNode = waffleScene?.rootNode.childNode(withName: "waffle", recursively: true) else { fatalError("waffle not found")}
-        
-        // TODO THIS DOESN"T WORKKKKKK
-//      waffleNode.position = SCNVector3(0, 0.5, 0)
-//      waffleNode.eulerAngles.x = 90
-        
-        
-      node.addChildNode(waffleNode)
+            // Add waffle model as a child of the AR Anchor node
+            node.addChildNode(modelClone)
+        }
     }
 }
