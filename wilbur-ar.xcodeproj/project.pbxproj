@@ -14,6 +14,7 @@
 		906F7986238A8E0400FE10D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 906F7984238A8E0400FE10D4 /* Main.storyboard */; };
 		906F7988238A8E0600FE10D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 906F7987238A8E0600FE10D4 /* Assets.xcassets */; };
 		906F798B238A8E0600FE10D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 906F7989238A8E0600FE10D4 /* LaunchScreen.storyboard */; };
+		90A4CB5C241EAA0E00970499 /* PlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A4CB5B241EAA0E00970499 /* PlaneNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		906F7987238A8E0600FE10D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		906F798A238A8E0600FE10D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		906F798C238A8E0600FE10D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		90A4CB5B241EAA0E00970499 /* PlaneNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 		906F797D238A8E0400FE10D4 /* wilbur-ar */ = {
 			isa = PBXGroup;
 			children = (
+				90A4CB5A241EA9E800970499 /* Utilties */,
 				906F797E238A8E0400FE10D4 /* AppDelegate.swift */,
 				906F7980238A8E0400FE10D4 /* ViewController.swift */,
 				906F7982238A8E0400FE10D4 /* Experience.rcproject */,
@@ -68,6 +71,14 @@
 				906F798C238A8E0600FE10D4 /* Info.plist */,
 			);
 			path = "wilbur-ar";
+			sourceTree = "<group>";
+		};
+		90A4CB5A241EA9E800970499 /* Utilties */ = {
+			isa = PBXGroup;
+			children = (
+				90A4CB5B241EAA0E00970499 /* PlaneNode.swift */,
+			);
+			path = Utilties;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,6 +153,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90A4CB5C241EAA0E00970499 /* PlaneNode.swift in Sources */,
 				906F7981238A8E0400FE10D4 /* ViewController.swift in Sources */,
 				906F797F238A8E0400FE10D4 /* AppDelegate.swift in Sources */,
 				906F7983238A8E0400FE10D4 /* Experience.rcproject in Sources */,
